@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@grammar-museum/shared": "workspace:*",
+    "lucide-react": "^1.26.0",
     "next": "^15.5.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
