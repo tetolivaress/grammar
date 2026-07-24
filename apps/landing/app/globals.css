@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f5f1e8;
+  color: #1f2430;
+  line-height: 1.55;
+}
+
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hero {
+  padding: 72px 0 48px;
+}
+
+.kicker {
+  color: #2a9d8f;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.1;
+  margin: 10px 0 18px;
+}
+
+.lede {
+  font-size: 18px;
+  color: rgba(31, 36, 48, 0.75);
+  max-width: 640px;
+}
+
+.cta {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 1.5px solid #1f2430;
+  color: #1f2430;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn.primary {
+  background: #1f2430;
+  color: #fffdf7;
+}
+
+.rooms h2,
+.how h2 {
+  margin: 40px 0 16px;
+}
+
+.rooms ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.rooms li {
+  background: #fffdf7;
+  border: 1px solid rgba(31, 36, 48, 0.12);
+  border-top: 5px solid #1f2430;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rooms li span {
+  color: rgba(31, 36, 48, 0.55);
+  font-size: 13.5px;
+}
+
+.how ol {
+  padding-left: 20px;
+  max-width: 640px;
+  display: grid;
+  gap: 10px;
+}
+
+footer {
+  margin: 64px 0 24px;
+  color: rgba(31, 36, 48, 0.5);
+  font-size: 13.5px;
+}

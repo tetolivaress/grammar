@@ -1,0 +1,11 @@
+# root
+node_modules
+dist
+.next
+*.log
+.env
+.env.*
+!.env.example
+.env.local
+.DS_Store
+.claude/settings.local.json

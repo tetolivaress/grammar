@@ -1,0 +1,88 @@
+---
+title: Grammar Museum — database design (Prisma / SQLite)
+---
+erDiagram
+    %% ------------------------------------------------------------------
+    %% Source of truth: apps/api/prisma/schema.prisma
+    %% Better Auth tables (user, session, account, verification) +
+    %% museum content tables (Room, Panel).
+    %% ------------------------------------------------------------------
+
+    User ||--o{ Session : "has active"
+    User ||--o{ Account : "signs in with"
+    Room ||--o{ Panel : "hangs on walls"
+
+    User {
+        string   id PK
+        string   name
+        string   email UK
+        boolean  emailVerified "default false"
+        string   image "nullable"
+        string   role "admin | user, default user (admin plugin)"
+        boolean  banned "default false (admin plugin)"
+        string   banReason "nullable (admin plugin)"
+        datetime banExpires "nullable (admin plugin)"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Session {
+        string   id PK
+        string   token UK "session cookie value"
+        datetime expiresAt
+        string   ipAddress "nullable"
+        string   userAgent "nullable"
+        string   userId FK "-> User.id, cascade delete"
+        string   impersonatedBy "nullable (admin plugin)"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Account {
+        string   id PK
+        string   accountId "provider-side id"
+        string   providerId "e.g. credential"
+        string   userId FK "-> User.id, cascade delete"
+        string   password "bcrypt-style hash, nullable (email+password)"
+        string   accessToken "nullable (OAuth)"
+        string   refreshToken "nullable (OAuth)"
+        string   idToken "nullable (OAuth)"
+        datetime accessTokenExpiresAt "nullable"
+        datetime refreshTokenExpiresAt "nullable"
+        string   scope "nullable"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Verification {
+        string   id PK "email verification / reset tokens"
+        string   identifier
+        string   value
+        datetime expiresAt
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Room {
+        string   id PK "cuid"
+        string   slug UK "lowercase, url-safe"
+        string   name "door sign (max 40)"
+        string   nameEs "Spanish subtitle (max 40)"
+        string   accent "theme accent key"
+        string   kind "room | corridor, default room"
+        int      sortIndex "array order = lobby angle; max 10 rooms (app rule)"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Panel {
+        string id PK "cuid"
+        string roomId FK "-> Room.id, cascade delete"
+        string wall "north | east | south | west"
+        int    slot "0-2 rooms, 0-5 corridor walls; UNIQUE(roomId, wall, slot)"
+        string title "max 60"
+        string subtitle "formula line, nullable, max 170"
+        string body "JSON-encoded string[], 1-6 lines of max 240"
+        string footnote "nullable, max 220"
+        string imageUrl "nullable, /uploads/... path"
+    }

@@ -1,0 +1,24 @@
+{
+  "name": "english3d",
+  "private": true,
+  "packageManager": "pnpm@10.15.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  },
+  "scripts": {
+    "build": "pnpm --filter @grammar-museum/shared build && pnpm --filter '!@grammar-museum/shared' -r build",
+    "dev:museum": "pnpm --filter museum dev",
+    "dev:api": "pnpm --filter api start:dev",
+    "dev:backoffice": "pnpm --filter backoffice dev",
+    "dev:landing": "pnpm --filter landing dev",
+    "db:seed": "pnpm --filter api seed",
+    "db:studio": "pnpm --filter api prisma:studio"
+  }
+}
