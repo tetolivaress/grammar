@@ -2,7 +2,7 @@ node_modules
 dist
 dev.db
 dev.db-journal
-uploads/
+/uploads/
 .env
 .env.*
 !.env.example
