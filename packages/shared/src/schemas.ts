@@ -13,9 +13,10 @@ export const ACCENTS = [
   "idioms",
   "gerunds",
   "reported",
+  "translation",
 ] as const
 
-export const MAX_ROOMS = 10
+export const MAX_ROOMS = 11
 export const MAX_ROOM_SLOT = 2 // room walls hold up to 3 panels (slots 0-2)
 export const MAX_CORRIDOR_SLOT = 5 // corridor side walls hold 6 (slots 0-5)
 export const MAX_BODY_ITEMS = 6

@@ -19,12 +19,14 @@ export interface RoomConfig {
 // per face, spaced 360/N degrees. Each room connects through a tunnel and
 // opens toward the lobby (its local -Z / "south" wall carries the doorway).
 //
-// Twelve-meter rooms rotated 36° apart cannot share one ring without their
-// front corners interpenetrating (separating-axis test), so rooms alternate
-// between a near and a far ring: a far neighbor at distance D projects onto a
-// near room's width axis at D*sin36° - 8.66 m, which must exceed 6.2 m
-// => D ≥ 25.6. The narrow corridor kind clears its neighbors from the near
-// ring. Content comes from the CMS at runtime (1..10 rooms); the layout is
+// Twelve-meter rooms a few tens of degrees apart cannot share one ring without
+// their front corners interpenetrating (separating-axis test), so rooms
+// alternate between a near and a far ring: a far neighbor at distance D
+// projects onto a near room's width axis at D*sin(360°/N) - 8.66 m, which must
+// exceed 6.2 m => D ≥ 27.5 at N = 11. With an odd N the last room would sit on
+// the near ring beside the near-ring room at index 0, so it goes to the far
+// ring too. The narrow corridor kind clears its neighbors from the near ring.
+// Content comes from the CMS at runtime (1..11 rooms); the layout is
 // recomputed from the array order.
 // ---------------------------------------------------------------------------
 
@@ -33,7 +35,7 @@ export const DOOR_WIDTH = 2
 export const DOOR_HEIGHT = 2.6
 export const WALL_H = 4
 export const ROOM_WALL_PLANE = 14.8 // near ring: lobby-facing wall distance
-export const ROOM_WALL_PLANE_FAR = 19.8 // far ring (staggered)
+export const ROOM_WALL_PLANE_FAR = 22.8 // far ring (staggered)
 export const EYE_HEIGHT = 1.6
 
 const ROOM_DIST = ROOM_WALL_PLANE + 6 // 12x12 room center, near ring
@@ -53,9 +55,11 @@ const deg = (d: number) => (d * Math.PI) / 180
  * the near and far ring by index so adjacent boxes never intersect (see the
  * layout comment above).
  */
-function radialDistance(kind: RoomContent["kind"], index: number): number {
+function radialDistance(kind: RoomContent["kind"], index: number, count: number): number {
   if (kind === "corridor") return CORRIDOR_DIST
-  const onFarRing = index % 2 === 1
+  // odd count: the last room neighbors index 0 (near ring) as well as index count-2
+  const besideIndexZero = count % 2 === 1 && count > 3 && index === count - 1
+  const onFarRing = index % 2 === 1 || besideIndexZero
   return onFarRing ? ROOM_DIST_FAR : ROOM_DIST
 }
 
@@ -66,7 +70,7 @@ export function buildRoomConfigs(content: RoomContent[]): RoomConfig[] {
   return content.map((room, i) => {
     const angle = deg(180 - i * step)
     const corridor = room.kind === "corridor"
-    const dist = radialDistance(room.kind, i)
+    const dist = radialDistance(room.kind, i, n)
     return {
       slug: room.slug,
       name: room.name,

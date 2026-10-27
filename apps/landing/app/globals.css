@@ -18,6 +18,7 @@
   --room-phrasal: #3d5a80;
   --room-idioms: #b8578f;
   --room-reported: #d264a0;
+  --room-translation: #4b3f9e;
   --font-head: var(--font-poppins), sans-serif;
   --font-body: var(--font-inter), sans-serif;
 }

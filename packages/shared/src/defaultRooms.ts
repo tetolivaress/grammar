@@ -488,4 +488,143 @@ export const defaultRooms: RoomContent[] = [
       },
     ],
   },
+  {
+    slug: "translation",
+    name: "Lost in Translation",
+    nameEs: "Perdido en la traducción",
+    accent: "translation",
+    kind: "room",
+    // Spanish phrases that learners translate word for word, and what English
+    // says instead. Walking order as in Relative Clauses: north left to right
+    // (the idea, correct vs. natural, tener), the east wall from its north
+    // corner toward the door (east slots count from the door, so 2, 1, 0),
+    // the west wall from its north corner (0, 1, 2), then the door wall:
+    // south 0 sits beside the west wall, south 2 beside the east wall (slot 1
+    // is the doorway). The three "Talk" panels are one discussion, split by
+    // topic. Every panel is measured to fit WallPanel; footnotes hold answers
+    // and alternatives.
+    panels: [
+      {
+        wall: "north", slot: 0,
+        title: "Translate the meaning",
+        subtitle: "not the words",
+        body: [
+          "Spanish: Tengo 28 años.",
+          "Word for word: I have 28 years.",
+          "Natural English: I'm 28 years old.",
+          "Word for word keeps the Spanish structure: it can sound odd or mean something else.",
+        ],
+      },
+      {
+        wall: "north", slot: 1,
+        title: "Correct vs. natural",
+        subtitle: "less natural isn't always wrong",
+        body: [
+          "I have a doubt. → I have a question.",
+          "I made a party for my birthday. → I had a party for my birthday.",
+          "I lost the bus. → I missed the bus.",
+          "According to me, this is a bad idea. → In my opinion, this is a bad idea.",
+        ],
+      },
+      {
+        wall: "north", slot: 2,
+        title: "Tengo… is not I have…",
+        subtitle: "age and being right use be",
+        body: [
+          "Tengo 28 años → I'm 28 years old. (not: I have 28 years)",
+          "Tengo razón → I'm right. (not: I have reason)",
+          "Tengo ganas de salir → I feel like going out. (not: I have desires to go out)",
+        ],
+        footnote: "feel like + verb-ing = want to do something: I feel like staying home tonight.",
+      },
+      {
+        wall: "east", slot: 2,
+        title: "Me da… and me cae…",
+        subtitle: "English says how you feel",
+        body: [
+          "Me da igual → It doesn't matter to me. (not: It gives me the same)",
+          "Me da vergüenza → I'm embarrassed. (not: It gives me shame)",
+          "Me cae bien → I like him. (not: He falls well to me)",
+        ],
+        footnote: "Also: I don't mind. · I get along with him. Embarrassed = how you feel; embarrassing = what causes it.",
+      },
+      {
+        wall: "east", slot: 1,
+        title: "Forget, sense, miss",
+        subtitle: "make the person the subject",
+        body: [
+          "Se me olvidó → I forgot. (not: It forgot to me)",
+          "No tiene sentido → It doesn't make sense. (not: It doesn't have sense)",
+          "Perdí el bus → I missed the bus. (not: I lost the bus)",
+        ],
+        footnote: "Also: It slipped my mind. Miss the bus = you didn't catch it; lose = you can't find it.",
+      },
+      {
+        wall: "east", slot: 0,
+        title: "Qué pereza",
+        subtitle: "no single perfect translation",
+        body: [
+          "Qué pereza → I really don't feel like it. (not: What laziness!)",
+          "What a hassle! · That sounds like too much effort.",
+          "I can't be bothered. (informal, can sound dismissive)",
+        ],
+      },
+      {
+        wall: "west", slot: 0,
+        title: "Fix the translation",
+        subtitle: "rewrite each one in natural English",
+        body: [
+          "I have 32 years, and I live in San José.",
+          "I have desires to stay home tonight.",
+          "My friend falls well to me because she's very funny.",
+          "It doesn't have sense to spend so much money on that.",
+        ],
+        footnote: "Answers: I'm 32 years old… · I feel like staying home tonight. · I like my friend… · It doesn't make sense to spend…",
+      },
+      {
+        wall: "west", slot: 1,
+        title: "Use it naturally",
+        body: [
+          "You forgot your best friend's birthday. Try: It slipped my mind.",
+          "A friend wants to hike, but you'd rather rest. Try: I don't feel like it.",
+          "A friend wants a pricey new phone. Try: It doesn't make sense.",
+          "You arrive late and the other person left. Try: I missed the appointment.",
+        ],
+        footnote: "Use an expression from this room, then ask a follow-up question.",
+      },
+      {
+        wall: "west", slot: 2,
+        title: "Talk: everyday life",
+        body: [
+          "When did you last forget something important? What happened?",
+          "Should friends always say what they really think?",
+          "Have you agreed to something you didn't feel like doing?",
+          "What do people spend money on that doesn't make sense?",
+          "Is being late serious, or does it depend?",
+        ],
+      },
+      {
+        wall: "south", slot: 0,
+        title: "Talk: people & opinions",
+        body: [
+          "What makes you like someone when you first meet them?",
+          "Can you get along with someone who disagrees with you?",
+          "Have you changed your mind about someone?",
+          "Do you always tell the truth when asked your opinion?",
+          "What embarrasses you that others might not mind?",
+        ],
+      },
+      {
+        wall: "south", slot: 2,
+        title: "Talk: habits & decisions",
+        body: [
+          "What do you often feel like doing but rarely have time for?",
+          "What decision seemed right then but doesn't make sense now?",
+          "Have you missed an opportunity by forgetting something?",
+          "What did you dislike before but enjoy now?",
+          "If you could change one habit, what would it be?",
+        ],
+      },
+    ],
+  },
 ]

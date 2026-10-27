@@ -6,6 +6,7 @@ import {
   GitBranch,
   Hourglass,
   KeyRound,
+  Languages,
   Link2,
   MessageSquareQuote,
   Sparkles,
@@ -91,15 +92,23 @@ export const landingRooms: LandingRoom[] = [
 ]
 
 /** CMS rooms not present in the design get a sensible fallback style. */
-export const extraRoomStyle: LandingRoom = {
-  num: "10", slug: "reported", name: "Reported Speech", nameEs: "Estilo indirecto",
-  desc: "Turn direct words into reported ones — one tense back.",
-  learn: "Report statements, questions and commands with the right backshift.",
-  color: "--room-reported", Icon: MessageSquareQuote, ThumbIcon: MessageSquareQuote,
-}
+export const extraRoomStyles: LandingRoom[] = [
+  {
+    num: "10", slug: "reported", name: "Reported Speech", nameEs: "Estilo indirecto",
+    desc: "Turn direct words into reported ones — one tense back.",
+    learn: "Report statements, questions and commands with the right backshift.",
+    color: "--room-reported", Icon: MessageSquareQuote, ThumbIcon: MessageSquareQuote,
+  },
+  {
+    num: "11", slug: "translation", name: "Lost in Translation", nameEs: "Perdido en la traducción",
+    desc: "Spanish phrases that sound wrong when translated word for word.",
+    learn: "Say what you mean in natural English instead of translating word for word.",
+    color: "--room-translation", Icon: Languages, ThumbIcon: Languages,
+  },
+]
 
 export function roomStyle(slug: string): LandingRoom | undefined {
-  return landingRooms.find((r) => r.slug === slug) ?? (slug === extraRoomStyle.slug ? extraRoomStyle : undefined)
+  return landingRooms.find((r) => r.slug === slug) ?? extraRoomStyles.find((r) => r.slug === slug)
 }
 
 export const MUSEUM_URL = process.env.NEXT_PUBLIC_MUSEUM_URL ?? "http://localhost:5173"

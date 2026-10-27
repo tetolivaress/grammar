@@ -63,7 +63,7 @@ src/
 
 ## 3. World layout
 
-Radial plan: an octagonal lobby (16 m across) with 9 doorways. Rooms are rectangular boxes attached to the lobby's faces. Verb Tenses is a long corridor (timeline), everything else is a 12×12 m room, 4 m ceilings.
+Radial plan: an N-sided lobby (16 m across) with one doorway per room. Rooms are rectangular boxes attached to the lobby's faces; full rooms alternate between a near and a far ring so neighbors never overlap, and with an odd count the last room also takes the far ring (layout comment in `rooms.config.ts`). Verb Tenses is a long corridor (timeline), everything else is a 12×12 m room, 4 m ceilings.
 
 ```
                 [Tenses corridor →→→ 24m]
@@ -261,6 +261,24 @@ Organized by base verb — one panel per verb family.
 | **Both, DIFFERENT meaning** | remember, stop, try, forget | I stopped smoking (quit) vs. I stopped to smoke (paused in order to smoke). / Remember to lock the door (future duty) vs. I remember locking the door (past memory). |
 | **After prepositions → gerund** | preposition + -ing, always | She's good at drawing. / I'm interested in learning. / Thanks for coming. / He left without saying goodbye. |
 | **Gerund as subject** | -ing form starts the sentence | Swimming is great exercise. / Learning a language takes time. |
+
+### 5.10 Lost in Translation (indigo)
+
+Spanish phrases learners translate word for word, and what natural English says instead. Same walking order as Relative Clauses: north 1–3, east 3–1, west 1–3, then the door wall (south 1 beside the west wall, south 3 beside the east wall). Footnotes hold alternatives and answers.
+
+| Panel | Rule | Examples | Footnote |
+|---|---|---|---|
+| **Translate the meaning** | not the words | Spanish: Tengo 28 años. / Word for word: I have 28 years. / Natural English: I'm 28 years old. / Word for word keeps the Spanish structure: it can sound odd or mean something else. | |
+| **Correct vs. natural** | less natural isn't always wrong | I have a doubt. → I have a question. / I made a party for my birthday. → I had a party for my birthday. / I lost the bus. → I missed the bus. / According to me, this is a bad idea. → In my opinion, this is a bad idea. | |
+| **Tengo… is not I have…** | age and being right use be | Tengo 28 años → I'm 28 years old. (not: I have 28 years) / Tengo razón → I'm right. (not: I have reason) / Tengo ganas de salir → I feel like going out. (not: I have desires to go out) | feel like + verb-ing = want to do something: I feel like staying home tonight. |
+| **Me da… and me cae…** | English says how you feel | Me da igual → It doesn't matter to me. (not: It gives me the same) / Me da vergüenza → I'm embarrassed. (not: It gives me shame) / Me cae bien → I like him. (not: He falls well to me) | Also: I don't mind. · I get along with him. Embarrassed = how you feel; embarrassing = what causes it. |
+| **Forget, sense, miss** | make the person the subject | Se me olvidó → I forgot. (not: It forgot to me) / No tiene sentido → It doesn't make sense. (not: It doesn't have sense) / Perdí el bus → I missed the bus. (not: I lost the bus) | Also: It slipped my mind. Miss the bus = you didn't catch it; lose = you can't find it. |
+| **Qué pereza** | no single perfect translation | Qué pereza → I really don't feel like it. (not: What laziness!) / What a hassle! · That sounds like too much effort. / I can't be bothered. (informal, can sound dismissive) | |
+| **Fix the translation** | rewrite each one in natural English | I have 32 years, and I live in San José. / I have desires to stay home tonight. / My friend falls well to me because she's very funny. / It doesn't have sense to spend so much money on that. | Answers: I'm 32 years old… · I feel like staying home tonight. · I like my friend… · It doesn't make sense to spend… |
+| **Use it naturally** | — | You forgot your best friend's birthday. Try: It slipped my mind. / A friend wants to hike, but you'd rather rest. Try: I don't feel like it. / A friend wants a pricey new phone. Try: It doesn't make sense. / You arrive late and the other person left. Try: I missed the appointment. | Use an expression from this room, then ask a follow-up question. |
+| **Talk: everyday life** | — | When did you last forget something important? What happened? / Should friends always say what they really think? / Have you agreed to something you didn't feel like doing? / What do people spend money on that doesn't make sense? / Is being late serious, or does it depend? | |
+| **Talk: people & opinions** | — | What makes you like someone when you first meet them? / Can you get along with someone who disagrees with you? / Have you changed your mind about someone? / Do you always tell the truth when asked your opinion? / What embarrasses you that others might not mind? | |
+| **Talk: habits & decisions** | — | What do you often feel like doing but rarely have time for? / What decision seemed right then but doesn't make sense now? / Have you missed an opportunity by forgetting something? / What did you dislike before but enjoy now? / If you could change one habit, what would it be? | |
 
 ---
 

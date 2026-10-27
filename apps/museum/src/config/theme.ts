@@ -17,6 +17,7 @@ export const theme = {
     idioms: "#bc4b51", // brick red
     gerunds: "#5f7470", // sage
     reported: "#d264a0", // magenta
+    translation: "#4b3f9e", // indigo
   } as Record<string, string>,
 }
 
