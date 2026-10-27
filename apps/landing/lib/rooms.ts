@@ -15,8 +15,11 @@ import {
 
 /**
  * Marketing room data straight from design.pen (numbers, icons, colors and
- * copy are the design's). `slug` matches the CMS room slugs so the detail
- * pages can pull live exhibit content from the API.
+ * copy are the design's), with one exception: the relatives desc/learn copy
+ * was rewritten here, not in design.pen, when that room gained whom, whose
+ * and the defining vs. non-defining panels. Keep it when re-syncing from the
+ * design. `slug` matches the CMS room slugs so the detail pages can pull live
+ * exhibit content from the API.
  */
 export interface LandingRoom {
   num: string
@@ -57,8 +60,8 @@ export const landingRooms: LandingRoom[] = [
   },
   {
     num: "05", slug: "relatives", name: "Relative Clauses", nameEs: "Oraciones de relativo",
-    desc: "Who, which and that to add detail to nouns.",
-    learn: "Add rich detail to any noun with who, which, whose and where.",
+    desc: "Who, whom, whose, which and that to add detail to nouns.",
+    learn: "Tell defining from non-defining clauses and pick the right relative pronoun.",
     color: "--room-relative", Icon: Link2, ThumbIcon: Link2,
   },
   {

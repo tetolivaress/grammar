@@ -123,36 +123,92 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Oraciones de relativo",
     accent: "relatives",
     kind: "room",
+    // North, left to right: the pronouns, then defining and non-defining.
+    // Each side wall runs from its north corner toward the door:
+    // east = whom, whose, where/when; west = the comma pair, omitting.
+    // East slots count from the door (see Room.tsx), so whom is east slot 2,
+    // beside the pronouns; west slots count from the north corner, so the
+    // comma pair is west slot 0, beside non-defining. Panels are listed in
+    // this walking order, the same as the rows in the spec's §5.5.
+    // Every body line is measured to fit WallPanel (≤ 8 text lines in all).
     panels: [
       {
         wall: "north", slot: 0,
-        title: "Who / Which / That",
-        subtitle: "who = people, which = things, that = both (defining)",
-        body: split("The woman who lives next door is a doctor. / The book which you lent me is great. / The car that broke down was old."),
+        title: "Relative pronouns",
+        subtitle: "who = subject, whom = object (people)",
+        body: [
+          "who: The woman who called is my sister.",
+          "whom: The man whom you met is my uncle.",
+          "whose (possession): The student whose phone rang was embarrassed.",
+          "which (things): The car which is red is mine.",
+          "that (people or things): The movie that we watched was fantastic.",
+        ],
       },
       {
         wall: "north", slot: 1,
-        title: "Whose / Where / When",
-        subtitle: "possession, place, time",
-        body: split("That's the man whose dog bit me. / This is the town where I grew up. / I remember the day when we met."),
+        title: "Defining clauses",
+        subtitle: "tells you which one — no commas",
+        body: [
+          "The woman who called is my sister. (Which woman? The one who called.)",
+          "Students who study hard get good grades. (only those students)",
+          '"that" can replace who, whom or which.',
+          "All five pronoun examples are defining.",
+        ],
       },
       {
         wall: "north", slot: 2,
-        title: "Defining clauses",
-        subtitle: "essential info — no commas",
-        body: ["Students who study hard get good grades. (only those students)"],
+        title: "Non-defining clauses",
+        subtitle: 'extra info about a known noun — commas, never "that", keep the pronoun',
+        body: [
+          "Incorrect: Paris, that is the capital of France, is beautiful.",
+          "Correct: Paris, which is the capital of France, is beautiful.",
+          "Without the extra info: Paris is beautiful.",
+        ],
+      },
+      {
+        wall: "east", slot: 2,
+        title: "Who or whom?",
+        subtitle: "whom = the object · more formal English",
+        body: [
+          "The man whom I met was very kind. (I met him: the man receives the action.)",
+          "The man who met me was very kind. (He met me: the man does the action.)",
+        ],
       },
       {
         wall: "east", slot: 1,
-        title: "Non-defining clauses",
-        subtitle: "extra info — with commas, never that",
-        body: split("My brother, who lives in Madrid, is visiting. / Caracas, which is the capital, sits in a valley."),
+        title: "Whose",
+        subtitle: "possession — whose replaces a word like his, her, their, our…",
+        body: [
+          "My neighbor lives in apartment 3D. Her cat is orange.",
+          "Her cat becomes whose cat:",
+          "My neighbor, whose cat is orange, lives in apartment 3D.",
+        ],
+      },
+      {
+        wall: "east", slot: 0,
+        title: "Where / When",
+        subtitle: "where = place, when = time",
+        body: split("This is the town where I grew up. / I remember the day when we met."),
+      },
+      {
+        wall: "west", slot: 0,
+        title: "With or without commas?",
+        subtitle: "same words, different meaning",
+        body: [
+          "Defining: My brother who lives in Madrid is visiting. (I have more than one brother.)",
+          "Non-defining: My brother, who lives in Madrid, is visiting. (I have only one brother.)",
+        ],
       },
       {
         wall: "west", slot: 1,
         title: "Omitting the pronoun",
-        subtitle: "drop who/which/that when it's the object",
-        body: split("The movie (that) we watched was boring. / The person (who) you met is my boss."),
+        subtitle: "only when it's the object, and only in defining clauses",
+        body: [
+          "The man (whom) you met is my uncle.",
+          "The movie (that) we watched was fantastic.",
+          "Keep a subject: The car which is red is mine.",
+          "Commas? Keep it: My uncle, whom you met, is a doctor.",
+        ],
       },
     ],
   },

@@ -204,13 +204,18 @@ A 24 m corridor. Panels are placed **chronologically along both walls**: past te
 
 ### 5.5 Relative Clauses (violet)
 
+North wall, left to right: the pronouns, then defining and non-defining clauses side by side. The side walls run from the north corners toward the door: the east wall starts beside the pronouns (whom, whose, where/when) and the west wall beside non-defining (the comma pair, then omitting the pronoun). Rows follow that walking order. As backoffice slots that is north 1–3, east 3–1 (east slots count from the door) and west 1–2.
+
 | Panel | Rule | Examples |
 |---|---|---|
-| **Who / Which / That** | who = people, which = things, that = both (defining) | The woman who lives next door is a doctor. / The book which you lent me is great. / The car that broke down was old. |
-| **Whose / Where / When** | possession, place, time | That's the man whose dog bit me. / This is the town where I grew up. / I remember the day when we met. |
-| **Defining clauses** | essential info — no commas | Students who study hard get good grades. (only those students) |
-| **Non-defining clauses** | extra info — with commas, never *that* | My brother, who lives in Madrid, is visiting. / Caracas, which is the capital, sits in a valley. |
-| **Omitting the pronoun** | drop who/which/that when it's the object | The movie (that) we watched was boring. / The person (who) you met is my boss. |
+| **Relative pronouns** | who = subject, whom = object (people) | who: The woman who called is my sister. / whom: The man whom you met is my uncle. / whose (possession): The student whose phone rang was embarrassed. / which (things): The car which is red is mine. / that (people or things): The movie that we watched was fantastic. |
+| **Defining clauses** | tells you which one — no commas | The woman who called is my sister. (Which woman? The one who called.) / Students who study hard get good grades. (only those students) / "that" can replace who, whom or which. / All five pronoun examples are defining. |
+| **Non-defining clauses** | extra info about a known noun — commas, never "that", keep the pronoun | Incorrect: Paris, that is the capital of France, is beautiful. / Correct: Paris, which is the capital of France, is beautiful. / Without the extra info: Paris is beautiful. |
+| **Who or whom?** | whom = the object · more formal English | The man whom I met was very kind. (I met him: the man receives the action.) / The man who met me was very kind. (He met me: the man does the action.) |
+| **Whose** | possession — whose replaces a word like his, her, their, our… | My neighbor lives in apartment 3D. Her cat is orange. / Her cat becomes whose cat: / My neighbor, whose cat is orange, lives in apartment 3D. |
+| **Where / When** | where = place, when = time | This is the town where I grew up. / I remember the day when we met. |
+| **With or without commas?** | same words, different meaning | Defining: My brother who lives in Madrid is visiting. (I have more than one brother.) / Non-defining: My brother, who lives in Madrid, is visiting. (I have only one brother.) |
+| **Omitting the pronoun** | only when it's the object, and only in defining clauses | The man (whom) you met is my uncle. / The movie (that) we watched was fantastic. / Keep a subject: The car which is red is mine. / Commas? Keep it: My uncle, whom you met, is a doctor. |
 
 ### 5.6 Connectors (orange)
 
