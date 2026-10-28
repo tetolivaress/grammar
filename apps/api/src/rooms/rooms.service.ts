@@ -1,6 +1,7 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common"
 import {
-  MAX_ROOMS,
+  MAX_ROOMS_PER_FLOOR,
+  floorLabel,
   validatePanelPlacement,
   type PanelContent,
   type RoomKind,
@@ -9,7 +10,7 @@ import {
 import type { Panel, Room } from "@prisma/client"
 import { prisma } from "../prisma"
 
-type RoomMeta = { name?: string; nameEs?: string; accent?: string; kind?: RoomKind }
+type RoomMeta = { name?: string; nameEs?: string; accent?: string; kind?: RoomKind; floor?: number }
 type RoomCreate = Required<RoomMeta> & { slug: string }
 
 function toPanelDto(p: Panel) {
@@ -25,25 +26,22 @@ function toPanelDto(p: Panel) {
 }
 
 function toRoomDto(room: Room & { panels: Panel[] }) {
-  const { id, slug, name, nameEs, accent, kind, sortIndex } = room
-  return { id, slug, name, nameEs, accent, kind, sortIndex, panels: room.panels.map(toPanelDto) }
+  const { id, slug, name, nameEs, accent, kind, floor, sortIndex } = room
+  return { id, slug, name, nameEs, accent, kind, floor, sortIndex, panels: room.panels.map(toPanelDto) }
 }
 
 @Injectable()
 export class RoomsService {
   async list() {
     const rooms = await prisma.room.findMany({
-      orderBy: { sortIndex: "asc" },
+      orderBy: [{ floor: "asc" }, { sortIndex: "asc" }],
       include: { panels: { orderBy: [{ wall: "asc" }, { slot: "asc" }] } },
     })
     return rooms.map(toRoomDto)
   }
 
   async create(data: RoomCreate) {
-    const count = await prisma.room.count()
-    if (count >= MAX_ROOMS) {
-      throw new ConflictException(`The museum holds at most ${MAX_ROOMS} rooms`)
-    }
+    await this.assertFloorHasSpace(data.floor)
     const existing = await prisma.room.findUnique({ where: { slug: data.slug } })
     if (existing) throw new ConflictException(`A room with slug "${data.slug}" already exists`)
     const last = await prisma.room.aggregate({ _max: { sortIndex: true } })
@@ -55,9 +53,18 @@ export class RoomsService {
   }
 
   async update(id: string, data: RoomMeta) {
-    await this.getOrThrow(id)
+    const current = await this.getOrThrow(id)
+    if (data.floor !== undefined && data.floor !== current.floor) await this.assertFloorHasSpace(data.floor)
     const room = await prisma.room.update({ where: { id }, data, include: { panels: true } })
     return toRoomDto(room)
+  }
+
+  /** Each floor's lobby has at most MAX_ROOMS_PER_FLOOR doorways. */
+  private async assertFloorHasSpace(floor: number) {
+    const count = await prisma.room.count({ where: { floor } })
+    if (count >= MAX_ROOMS_PER_FLOOR) {
+      throw new ConflictException(`${floorLabel(floor)} is full (${MAX_ROOMS_PER_FLOOR} rooms); choose another floor`)
+    }
   }
 
   async remove(id: string) {

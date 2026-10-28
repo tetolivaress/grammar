@@ -16,6 +16,7 @@ import { VRLocomotion } from "./controls/VRLocomotion"
 import { EntryOverlay } from "./ui/EntryOverlay"
 import { Crosshair } from "./ui/Crosshair"
 import { HudHints } from "./ui/HudHints"
+import { SPAWN_Z } from "./config/rooms.config"
 
 /** Desktop/touch physics rig — swapped out for teleport locomotion in XR. */
 function ScreenControls() {
@@ -42,7 +43,7 @@ export default function App() {
   return (
     <KeyboardControls map={keyboardMap}>
       <Canvas
-        camera={{ position: [0, 1.6, 4], fov: 70, near: 0.1, far: 150 }}
+        camera={{ position: [0, 1.6, SPAWN_Z], fov: 70, near: 0.1, far: 150 }}
         dpr={[1, 2]}
         gl={{ antialias: true }}
       >

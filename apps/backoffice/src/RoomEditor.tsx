@@ -3,7 +3,10 @@ import { useForm } from "react-hook-form"
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
 import {
   ACCENTS,
+  floorLabel,
   MAX_CORRIDOR_SLOT,
+  MAX_FLOOR,
+  MAX_ROOMS_PER_FLOOR,
   MAX_ROOM_SLOT,
   roomUpdateSchema,
   WALLS,
@@ -20,9 +23,11 @@ type MetaValues = z.infer<typeof roomUpdateSchema>
 
 interface Props {
   room: RoomDto
+  /** Rooms per floor, to show how full each floor is. */
+  floorCounts: number[]
 }
 
-export function RoomEditor({ room }: Props) {
+export function RoomEditor({ room, floorCounts }: Props) {
   const [selected, setSelected] = useState<{ wall: Wall; slot: number } | null>(null)
   const [metaMessage, setMetaMessage] = useState<string | null>(null)
   const updateRoom = useUpdateRoom()
@@ -32,8 +37,11 @@ export function RoomEditor({ room }: Props) {
     formState: { errors },
   } = useForm<MetaValues>({
     resolver: standardSchemaResolver(roomUpdateSchema),
-    values: { name: room.name, nameEs: room.nameEs, accent: room.accent, kind: room.kind },
+    values: { name: room.name, nameEs: room.nameEs, accent: room.accent, kind: room.kind, floor: room.floor },
   })
+
+  // Floors in use plus one empty floor above them
+  const floors = Array.from({ length: Math.min(MAX_FLOOR, Math.max(1, floorCounts.length)) + 1 }, (_, f) => f)
 
   const maxSlot = room.kind === "corridor" ? MAX_CORRIDOR_SLOT : MAX_ROOM_SLOT
   const walls: Wall[] = room.kind === "corridor" ? ["east", "west"] : [...WALLS]
@@ -83,6 +91,20 @@ export function RoomEditor({ room }: Props) {
             <select {...register("kind")}>
               <option value="room">room (12×12)</option>
               <option value="corridor">corridor (timeline)</option>
+            </select>
+          </label>
+          <label>
+            Floor
+            <select {...register("floor", { valueAsNumber: true })}>
+              {floors.map((f) => {
+                const count = floorCounts[f] ?? 0
+                const full = f !== room.floor && count >= MAX_ROOMS_PER_FLOOR
+                return (
+                  <option key={f} value={f} disabled={full}>
+                    {floorLabel(f)} ({count}/{MAX_ROOMS_PER_FLOOR}){full ? " · full" : ""}
+                  </option>
+                )
+              })}
             </select>
           </label>
         </div>

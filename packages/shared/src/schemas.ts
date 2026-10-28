@@ -16,7 +16,10 @@ export const ACCENTS = [
   "translation",
 ] as const
 
-export const MAX_ROOMS = 11
+// No limit on rooms in total: they stack on floors joined by stairs. One floor's
+// lobby is checked for overlaps up to 11 doors (rooms.config.ts).
+export const MAX_ROOMS_PER_FLOOR = 11
+export const MAX_FLOOR = 9 // floors 0 (ground) to 9
 export const MAX_ROOM_SLOT = 2 // room walls hold up to 3 panels (slots 0-2)
 export const MAX_CORRIDOR_SLOT = 5 // corridor side walls hold 6 (slots 0-5)
 export const MAX_BODY_ITEMS = 6
@@ -56,11 +59,17 @@ export const roomSchema = z.object({
   nameEs: z.string().trim().min(1, "Spanish name is required").max(40),
   accent: z.enum(ACCENTS),
   kind: z.enum(ROOM_KINDS),
+  floor: z.number().int().min(0).max(MAX_FLOOR),
 })
 
 export const roomUpdateSchema = roomSchema.omit({ slug: true }).partial()
 
 export type PanelContent = z.infer<typeof panelSchema>
+
+/** "Ground floor", "Floor 1", … for the backoffice and error messages. */
+export function floorLabel(floor: number): string {
+  return floor === 0 ? "Ground floor" : `Floor ${floor}`
+}
 export type RoomContent = z.infer<typeof roomSchema> & { panels: PanelContent[] }
 
 /**

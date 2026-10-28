@@ -5,7 +5,8 @@ const split = (s: string) => s.split(" / ")
 /**
  * The museum's built-in curriculum. Used to seed the CMS database and as the
  * museum's offline fallback when the API is unreachable. Array order matters:
- * it drives each room's angle around the lobby.
+ * within a floor it drives each room's angle around the lobby. Lost in
+ * Translation starts on floor 1, so the second level has a room.
  */
 export const defaultRooms: RoomContent[] = [
   {
@@ -14,6 +15,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Tiempos verbales",
     accent: "tenses",
     kind: "corridor",
+    floor: 0,
     panels: [
       { wall: "west", slot: 0, title: "Past Simple", subtitle: "verb + -ed / irregular", body: ["I visited Caracas last year."] },
       { wall: "east", slot: 0, title: "Past Continuous", subtitle: "was/were + -ing", body: ["I was cooking when you called."] },
@@ -35,6 +37,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Condicionales",
     accent: "conditionals",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -79,6 +82,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Voz pasiva",
     accent: "passive",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -123,6 +127,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Oraciones de relativo",
     accent: "relatives",
     kind: "room",
+    floor: 0,
     // North, left to right: the pronouns, then defining and non-defining.
     // Each side wall runs from its north corner toward the door:
     // east = whom, whose, where/when; west = the comma pair, omitting.
@@ -218,6 +223,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Verbos modales",
     accent: "modals",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -269,6 +275,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Estilo indirecto",
     accent: "reported",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -331,6 +338,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Conectores",
     accent: "connectors",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -376,6 +384,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Gerundios e infinitivos",
     accent: "gerunds",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -421,6 +430,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Verbos compuestos",
     accent: "phrasals",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -460,6 +470,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Modismos",
     accent: "idioms",
     kind: "room",
+    floor: 0,
     panels: [
       {
         wall: "north", slot: 0,
@@ -494,6 +505,7 @@ export const defaultRooms: RoomContent[] = [
     nameEs: "Perdido en la traducción",
     accent: "translation",
     kind: "room",
+    floor: 1,
     // Spanish phrases that learners translate word for word, and what English
     // says instead. Walking order as in Relative Clauses: north left to right
     // (the idea, correct vs. natural, tener), the east wall from its north

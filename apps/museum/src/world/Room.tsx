@@ -1,8 +1,8 @@
-import { RigidBody } from "@react-three/rapier"
+import { CuboidCollider, RigidBody } from "@react-three/rapier"
 import { TeleportTarget } from "@react-three/xr"
 import { Text } from "@react-three/drei"
 import type { RoomConfig, Wall } from "../config/rooms.config"
-import { DOOR_WIDTH, DOOR_HEIGHT } from "../config/rooms.config"
+import { DOOR_WIDTH, DOOR_HEIGHT, SLAB } from "../config/rooms.config"
 import { theme, fonts, mat } from "../config/theme"
 import { WallPanel } from "./WallPanel"
 import { RoomProps } from "./Props"
@@ -81,6 +81,13 @@ export function Room({ config }: { config: RoomConfig }) {
           <boxGeometry args={[w + T * 2, T, d + T * 2]} />
         </mesh>
       </RigidBody>
+
+      {/* upper floors have no ground below: the room needs its own floor */}
+      {config.floor > 0 && (
+        <RigidBody type="fixed" colliders={false}>
+          <CuboidCollider args={[hw, SLAB / 2, hd]} position={[0, -SLAB / 2, 0]} />
+        </RigidBody>
+      )}
 
       {/* floor: teleport target for the hand-tracking fallback in VR */}
       <TeleportTarget onTeleport={teleport}>

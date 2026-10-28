@@ -5,6 +5,7 @@ import { RigidBody, CapsuleCollider, type RapierRigidBody } from "@react-three/r
 import type { Group } from "three"
 import { useMoveScratch, WALK_SPEED, RUN_SPEED } from "./usePlayerRig"
 import { useAppStore } from "../store/useAppStore"
+import { SPAWN_Z } from "../config/rooms.config"
 
 const SNAP_ANGLE = Math.PI / 4 // 45°
 const SNAP_DEADZONE = 0.7
@@ -85,7 +86,7 @@ export function VRLocomotion() {
 
   return (
     <>
-      <XROrigin ref={origin} position={[0, 0, 4]} />
+      <XROrigin ref={origin} position={[0, 0, SPAWN_Z]} />
       {session && (
         <RigidBody
           ref={body}
@@ -93,7 +94,7 @@ export function VRLocomotion() {
           colliders={false}
           lockRotations
           canSleep={false}
-          position={[0, 1, 4]}
+          position={[0, 1, SPAWN_Z]}
         >
           <CapsuleCollider args={[0.6, 0.3]} />
         </RigidBody>

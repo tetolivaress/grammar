@@ -107,6 +107,13 @@ main { padding: 24px; overflow-y: auto; }
   margin-bottom: 10px;
 }
 .rooms-list ul { list-style: none; }
+.floor-group + .floor-group { margin-top: 14px; }
+.floor-head {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 6px 0 4px;
+}
 .rooms-list li {
   display: flex;
   align-items: center;

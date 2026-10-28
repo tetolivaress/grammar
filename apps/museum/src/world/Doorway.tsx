@@ -1,8 +1,8 @@
-import { RigidBody } from "@react-three/rapier"
+import { CuboidCollider, RigidBody } from "@react-three/rapier"
 import { TeleportTarget } from "@react-three/xr"
 import { Text } from "@react-three/drei"
 import type { RoomConfig } from "../config/rooms.config"
-import { LOBBY_APOTHEM } from "../config/rooms.config"
+import { LOBBY_APOTHEM, SLAB } from "../config/rooms.config"
 import { theme, fonts, mat, accentText } from "../config/theme"
 import { useAppStore } from "../store/useAppStore"
 
@@ -27,7 +27,7 @@ export function Doorway({ config }: { config: RoomConfig }) {
   const tunnelMid = (startR + endR) / 2
 
   return (
-    <group rotation-y={config.rotationY}>
+    <group position-y={config.position[1]} rotation-y={config.rotationY}>
       <RigidBody type="fixed" colliders="cuboid">
         {/* tunnel side walls + ceiling */}
         <mesh position={[-1.1, 1.3, tunnelMid]} material={mat(theme.walls)}>
@@ -40,6 +40,13 @@ export function Doorway({ config }: { config: RoomConfig }) {
           <boxGeometry args={[2.4, 0.2, tunnelLen]} />
         </mesh>
       </RigidBody>
+
+      {/* upper floors have no ground below: the tunnel needs its own floor */}
+      {config.floor > 0 && (
+        <RigidBody type="fixed" colliders={false}>
+          <CuboidCollider args={[1.2, SLAB / 2, tunnelLen / 2]} position={[0, -SLAB / 2, tunnelMid]} />
+        </RigidBody>
+      )}
 
       {/* tunnel floor strip (teleport hop between lobby and room) */}
       <TeleportTarget onTeleport={teleport}>

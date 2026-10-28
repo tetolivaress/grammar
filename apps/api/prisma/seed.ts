@@ -15,6 +15,7 @@ async function main() {
         nameEs: room.nameEs,
         accent: room.accent,
         kind: room.kind,
+        floor: room.floor,
         sortIndex: index,
       },
       update: { sortIndex: index },

@@ -63,7 +63,9 @@ src/
 
 ## 3. World layout
 
-Radial plan: an N-sided lobby (16 m across) with one doorway per room. Rooms are rectangular boxes attached to the lobby's faces; full rooms alternate between a near and a far ring so neighbors never overlap, and with an odd count the last room also takes the far ring (layout comment in `rooms.config.ts`). Verb Tenses is a long corridor (timeline), everything else is a 12×12 m room, 4 m ceilings.
+Radial plan: an N-sided lobby (16 m across) with one doorway per room. Rooms are rectangular boxes attached to the lobby's faces; full rooms alternate between a near and a far ring so neighbors never overlap, and with an odd count the last room also takes the far ring (layout comment in `rooms.config.ts`).
+
+**Floors.** There is no limit on rooms in total: each room has a `floor` (0 = ground, set in the backoffice), and each floor holds up to 11 rooms (`MAX_ROOMS_PER_FLOOR`). Every floor repeats the same lobby polygon (as many faces as the busiest floor has rooms), 4.2 m apart (4 m walls + a 0.2 m slab), so a room sits exactly above the one on the same face below. The museum always builds at least a second level. Upper lobbies are rings around an open round atrium (4 m radius) with a railing; a switchback staircase in the atrium (two flights and a half landing, about 21°) joins each floor to the next, each turned 180° from the one below, and the ground floor's faces the spawn point. The steps are visual: the physics capsule walks a smooth ramp under them. The floating title hangs over the top floor's atrium. Verb Tenses is a long corridor (timeline), everything else is a 12×12 m room, 4 m ceilings.
 
 ```
                 [Tenses corridor →→→ 24m]
@@ -143,6 +145,7 @@ export interface RoomConfig {
   position: [number, number, number]
   rotationY: number
   kind: "room" | "corridor"
+  floor: number            // 0 = ground; up to 11 rooms per floor
   panels: Panel[]
 }
 ```

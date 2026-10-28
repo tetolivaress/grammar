@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber"
 import { RigidBody, CapsuleCollider, type RapierRigidBody } from "@react-three/rapier"
 import type { PerspectiveCamera } from "three"
 import { useAppStore } from "../store/useAppStore"
+import { SPAWN_Z } from "../config/rooms.config"
 import { rigInput, applyLook, useMoveScratch, WALK_SPEED, RUN_SPEED } from "./usePlayerRig"
 
 const CAPSULE_RADIUS = 0.3
@@ -50,6 +51,8 @@ export function PlayerRig() {
     camera.position.set(t.x, t.y + EYE_OFFSET, t.z)
     if (import.meta.env.DEV) {
       ;(window as unknown as Record<string, unknown>).__playerPos = { x: t.x, y: t.y, z: t.z }
+      // lets browser tests steer the player (walk the stairs, enter rooms)
+      ;(window as unknown as Record<string, unknown>).__rig = { input: rigInput, camera }
     }
   })
 
@@ -59,7 +62,7 @@ export function PlayerRig() {
       type="dynamic"
       colliders={false}
       lockRotations
-      position={[0, 1, 4]}
+      position={[0, 1, SPAWN_Z]}
       canSleep={false}
     >
       <CapsuleCollider args={[CAPSULE_HALF_HEIGHT, CAPSULE_RADIUS]} />

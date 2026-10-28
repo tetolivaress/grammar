@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
-import { ACCENTS, MAX_ROOMS, roomSchema } from "@grammar-museum/shared"
+import { ACCENTS, floorLabel, MAX_FLOOR, MAX_ROOMS_PER_FLOOR, roomSchema } from "@grammar-museum/shared"
 import { z } from "zod"
 import { ApiError } from "./services/http"
 import { useCreateRoom, useDeleteRoom, useRooms } from "./hooks/rooms.hooks"
@@ -26,6 +26,13 @@ export function Admin() {
 
   const selected = rooms.find((r) => r.id === selectedId) ?? null
 
+  // Floors in use plus one empty floor above them, so a room can open a new level.
+  const topFloor = Math.min(MAX_FLOOR, Math.max(1, ...rooms.map((r) => r.floor)) + 1)
+  const floors = Array.from({ length: topFloor + 1 }, (_, f) => f)
+  const roomsOn = (floor: number) => rooms.filter((r) => r.floor === floor)
+  const firstFreeFloor = floors.find((f) => roomsOn(f).length < MAX_ROOMS_PER_FLOOR) ?? 0
+  const blankRoom = { kind: "room" as const, accent: ACCENTS[0], slug: "", name: "", nameEs: "", floor: firstFreeFloor }
+
   const {
     register,
     handleSubmit,
@@ -33,14 +40,14 @@ export function Admin() {
     formState: { errors },
   } = useForm<NewRoom>({
     resolver: standardSchemaResolver(roomSchema),
-    defaultValues: { kind: "room", accent: ACCENTS[0] },
+    defaultValues: blankRoom,
   })
 
   const onCreate = handleSubmit(async (values) => {
     setError(null)
     try {
       const room = await createRoom.mutateAsync(values)
-      reset({ kind: "room", accent: ACCENTS[0], slug: "", name: "", nameEs: "" })
+      reset(blankRoom)
       setCreating(false)
       setSelectedId(room.id)
     } catch (e) {
@@ -93,13 +100,14 @@ export function Admin() {
         <div className="rooms-list">
           <div className="rooms-list-head">
             <h2>
-              Rooms <span className="muted">{rooms.length}/{MAX_ROOMS}</span>
+              Rooms <span className="muted">{rooms.length}</span>
             </h2>
             <button
               type="button"
-              disabled={rooms.length >= MAX_ROOMS}
-              title={rooms.length >= MAX_ROOMS ? `Maximum ${MAX_ROOMS} rooms` : undefined}
-              onClick={() => setCreating((v) => !v)}
+              onClick={() => {
+                if (!creating) reset(blankRoom)
+                setCreating((v) => !v)
+              }}
             >
               + New
             </button>
@@ -139,32 +147,57 @@ export function Admin() {
                   <option value="corridor">corridor</option>
                 </select>
               </label>
+              <label>
+                Floor
+                <select {...register("floor", { valueAsNumber: true })}>
+                  {floors.map((f) => {
+                    const full = roomsOn(f).length >= MAX_ROOMS_PER_FLOOR
+                    return (
+                      <option key={f} value={f} disabled={full}>
+                        {floorLabel(f)} ({roomsOn(f).length}/{MAX_ROOMS_PER_FLOOR}){full ? " · full" : ""}
+                      </option>
+                    )
+                  })}
+                </select>
+              </label>
               <button type="submit" disabled={createRoom.isPending}>
                 Create room
               </button>
             </form>
           )}
 
-          <ul>
-            {rooms.map((room) => (
-              <li key={room.id} className={room.id === selectedId ? "active" : ""}>
-                <button type="button" className="room-btn" onClick={() => setSelectedId(room.id)}>
-                  <strong>{room.name}</strong>
+          {floors
+            .filter((f) => roomsOn(f).length > 0)
+            .map((f) => (
+              <div key={f} className="floor-group">
+                <h3 className="floor-head">
+                  {floorLabel(f)}{" "}
                   <span className="muted">
-                    {room.nameEs} · {room.panels.length} panels
+                    {roomsOn(f).length}/{MAX_ROOMS_PER_FLOOR}
                   </span>
-                </button>
-                <button
-                  type="button"
-                  className="link danger"
-                  disabled={deleteRoom.isPending}
-                  onClick={() => onDelete(room.id, room.name)}
-                >
-                  ✕
-                </button>
-              </li>
+                </h3>
+                <ul>
+                  {roomsOn(f).map((room) => (
+                    <li key={room.id} className={room.id === selectedId ? "active" : ""}>
+                      <button type="button" className="room-btn" onClick={() => setSelectedId(room.id)}>
+                        <strong>{room.name}</strong>
+                        <span className="muted">
+                          {room.nameEs} · {room.panels.length} panels
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        className="link danger"
+                        disabled={deleteRoom.isPending}
+                        onClick={() => onDelete(room.id, room.name)}
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
         </div>
         {loadError && <p className="error">Could not load rooms — is the API running?</p>}
         {error && <p className="error">{error}</p>}
@@ -174,7 +207,7 @@ export function Admin() {
         {section === "users" && isAdmin ? (
           <UsersPage />
         ) : selected ? (
-          <RoomEditor key={selected.id} room={selected} />
+          <RoomEditor key={selected.id} room={selected} floorCounts={floors.map((f) => roomsOn(f).length)} />
         ) : (
           <div className="empty-state">
             <h2>Select a room</h2>
